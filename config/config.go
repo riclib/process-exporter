@@ -54,6 +54,7 @@ type (
 		Comm      string
 		ExeBase   string
 		ExeFull   string
+		ExePath   string
 		Username  string
 		PID       int
 		StartTime time.Time
@@ -120,6 +121,7 @@ func (m *matchNamer) MatchAndName(nacl common.ProcAttributes) (bool, string) {
 		Cgroups:   nacl.Cgroups,
 		ExeBase:   exebase,
 		ExeFull:   exefull,
+		ExePath:   nacl.Cmdline[0],
 		Matches:   matches,
 		Username:  nacl.Username,
 		PID:       nacl.PID,
