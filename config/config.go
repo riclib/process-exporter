@@ -116,12 +116,17 @@ func (m *matchNamer) MatchAndName(nacl common.ProcAttributes) (bool, string) {
 	}
 
 	var buf bytes.Buffer
+	fullCMDLine := strings.Join(nacl.Cmdline, " ")
+	//truncate if longer than 9k
+	if len(fullCMDLine) > 8191 {
+		fullCMDLine = fullCMDLine[:8192]
+	}
 	m.template.Execute(&buf, &templateParams{
 		Comm:      nacl.Name,
 		Cgroups:   nacl.Cgroups,
 		ExeBase:   exebase,
 		ExeFull:   exefull,
-		ExePath:   nacl.Cmdline[0],
+		ExePath:   fullCMDLine,
 		Matches:   matches,
 		Username:  nacl.Username,
 		PID:       nacl.PID,
